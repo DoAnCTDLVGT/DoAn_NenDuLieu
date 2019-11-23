@@ -1,0 +1,37 @@
+﻿  main.cpp
+  Source.cpp
+E:\18120546-18120572\Huffman\main.cpp(25,11): warning C4566: character represented by universal-character-name '\u1ECF' cannot be represented in the current code page (1252)
+E:\18120546-18120572\Huffman\Source.cpp(169,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\18120546-18120572\Huffman\Source.cpp(180,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(220,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(302,15): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(316,54): error C2664: 'HANDLE FindFirstFileA(LPCSTR,LPWIN32_FIND_DATAA)': cannot convert argument 1 from 'wchar_t *' to 'LPCSTR'
+E:\18120546-18120572\Huffman\Source.cpp(316,31): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\fileapi.h(233,1): message : see declaration of 'FindFirstFileA'
+E:\18120546-18120572\Huffman\Source.cpp(319,63): error C2664: 'std::string wchar_t2string(const wchar_t *)': cannot convert argument 1 from 'CHAR [260]' to 'const wchar_t *'
+E:\18120546-18120572\Huffman\Source.cpp(319,53): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+E:\18120546-18120572\Huffman\Source.cpp(287,8): message : see declaration of 'wchar_t2string'
+E:\18120546-18120572\Huffman\Source.cpp(322,64): error C2664: 'std::string wchar_t2string(const wchar_t *)': cannot convert argument 1 from 'CHAR [260]' to 'const wchar_t *'
+E:\18120546-18120572\Huffman\Source.cpp(322,54): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+E:\18120546-18120572\Huffman\Source.cpp(287,8): message : see declaration of 'wchar_t2string'
+E:\18120546-18120572\Huffman\Source.cpp(338,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(395,21): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(447,21): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(492,11): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(714,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(718,21): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(735,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(805,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(809,21): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(828,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(836,11): warning C4018: '>': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(838,15): warning C4018: '>': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(845,20): warning C4018: '<=': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(908,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(912,21): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(924,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(927,19): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+E:\18120546-18120572\Huffman\Source.cpp(937,20): warning C4018: '<': signed/unsigned mismatch
+E:\18120546-18120572\Huffman\Source.cpp(943,19): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+  Generating Code...
+E:\18120546-18120572\Huffman\Source.cpp(950,20): warning C4018: '<': signed/unsigned mismatch
