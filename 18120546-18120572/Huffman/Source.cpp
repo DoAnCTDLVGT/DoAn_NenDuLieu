@@ -1,6 +1,15 @@
-﻿#include"Header.h"
+﻿#include "Header.h"
 ////PHẦN NÉN 
 
+NODE* CreateNode(unsigned char c)
+{
+	NODE* p = new NODE;
+	p->c = c;
+	p->freq = 1;
+	p->pLeft = NULL;
+	p->pRight = NULL;
+	return p;
+}
 //kiểm tra xem kí tự đó đã xuất hiện trong bảng chưa trả về vị trí xuất hiện, trả về -1 nếu không tìm thấy
 int KiemTraXuatHien(vector<NODE*> table, unsigned char c)
 {
@@ -199,13 +208,13 @@ void NenFile(string fileNameInput, string fileNameNen)
 	fInput.open(fileNameInput, ios::in | ios::binary);
 	if (!fInput)
 	{
-		cout << "Khong mo duoc file\n";
+		cout << "Khong mo duoc file in\n";
 		exit(0);
 	}
 	fNen.open(fileNameNen, ios::out | ios::binary);
 	if (!fNen)
 	{
-		cout << "Khong mo duoc file\n";
+		cout << "Khong mo duoc file out\n";
 		exit(0);
 	}
 
@@ -327,7 +336,7 @@ vector<string> listFilesInDirectory(string directoryName)
 //
 void NenFolder(string folderNameInput, string fileNameNen)
 {
-	// duyet cai tap tin co tronf folder
+	// duyet cai tap tin co trong folder
 	vector<string> listFile;
 	string str = folderNameInput;
 	str = str + "\\*txt";
@@ -858,7 +867,7 @@ void XemKichThuocFile(string file_Nen, string folderNameInput) {
 	//	vector<string>list_file_after;
 	fi1.open(file_Nen, ios::in | ios::binary);
 	if (!fi1) {
-		cout << "Khong tim thay file fi1" << endl;
+		cout << "Khong tim thay file nen" << endl;
 		return;
 	}
 	vector<string>_str;
