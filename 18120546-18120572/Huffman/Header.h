@@ -1,12 +1,13 @@
 ﻿#pragma once
 //Static Huffman
-#include<stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
 #include <cmath>
-#include<Windows.h>
+#include <Windows.h>
+#include<dirent>
 using namespace std;
 
 //struct NODE
@@ -42,16 +43,7 @@ struct Bit
 };
 
 //khởi tạo một node
-NODE* CreateNode(unsigned char c)
-{
-	NODE* p = new NODE;
-	p->c = c;
-	p->freq = 1;
-	p->pLeft = NULL;
-	p->pRight = NULL;
-	return p;
-}
-
+NODE* CreateNode(unsigned char c);
 //kiểm tra xem kí tự đó đã xuất hiện trong bảng chưa trả về vị trí xuất hiện, trả về -1 nếu không tìm thấy
 int KiemTraXuatHien(vector<NODE*> table, unsigned char c);
 //đọc file input để thống kê tần số của mỗi kí tự và lập thành vector
@@ -83,7 +75,7 @@ string wchar_t2string(const wchar_t* wchar);
 wchar_t* string2wchar_t(const string& str);
 //hàm duyệt folder
 vector<string> listFilesInDirectory(string directoryName);
-//
+// Nén folder
 void NenFolder(string folderNameInput, string fileNameNen);
 //PHẦN GIẢI NÉN
 
