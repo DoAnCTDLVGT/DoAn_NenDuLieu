@@ -7,7 +7,10 @@
 #include <fstream>
 #include <cmath>
 #include <Windows.h>
+<<<<<<< HEAD
 #include<dirent>
+=======
+>>>>>>> 2c9deb449b1e563312c5c5113aaa1d64df4e39fc
 using namespace std;
 
 //struct NODE
