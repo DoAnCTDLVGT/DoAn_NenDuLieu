@@ -1,3 +1,0 @@
-﻿  main.cpp
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\main.cpp(3): warning C4326: return type of 'main' should be 'int' instead of 'void'
-  Huffman.vcxproj -> E:\Cautrucdulieu_giaithuat\18120546-18120572\x64\Debug\Huffman.exe
