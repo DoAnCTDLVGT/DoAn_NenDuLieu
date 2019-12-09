@@ -7,6 +7,7 @@
 #include <fstream>
 #include <cmath>
 #include <Windows.h>
+#include <dirent.h>
 using namespace std;
 
 //struct NODE
@@ -73,7 +74,7 @@ void NenFile(string fileNameInput, string fileNameNen);
 string wchar_t2string(const wchar_t* wchar);
 wchar_t* string2wchar_t(const string& str);
 //hàm duyệt folder
-vector<string> listFilesInDirectory(string directoryName);
+vector<string> listFilesInDirectory(string &directoryName);
 // Nén folder
 void NenFolder(string folderNameInput, string fileNameNen);
 //PHẦN GIẢI NÉN
