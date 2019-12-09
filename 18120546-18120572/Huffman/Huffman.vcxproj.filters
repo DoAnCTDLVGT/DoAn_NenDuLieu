@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="in">
+      <UniqueIdentifier>{3887fe6a-2f41-42ca-9984-caf41cad32aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -31,5 +34,14 @@
     <Text Include="test.txt">
       <Filter>Source Files</Filter>
     </Text>
+<<<<<<< HEAD
+    <Text Include="..\..\in\input.txt">
+      <Filter>in</Filter>
+    </Text>
+    <Text Include="..\..\in\input12.txt">
+      <Filter>in</Filter>
+    </Text>
+=======
+>>>>>>> 2c9deb449b1e563312c5c5113aaa1d64df4e39fc
   </ItemGroup>
 </Project>
