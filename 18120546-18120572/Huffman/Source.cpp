@@ -81,13 +81,36 @@ void SortTable(vector<NODE*>& table)
 		Swap(table[vt], table[i]);
 	}
 }
+void SortTable(vector<NODE*>& table,int left,int right)
+{
+	int pivot = (left + right) / 2;
+	int i = left;
+	int j = right;
+	if (i >= j)
+		return;
+	while (i <= j)
+	{
+		while (table[pivot]->freq > table[i]->freq || (table[pivot]->freq == table[i]->freq&&table[pivot]->c > table[i]->c))
+			i++;
+		while (table[pivot]->freq < table[j]->freq || (table[pivot]->freq == table[j]->freq&&table[pivot]->c < table[j]->c))
+			j--;
+		if (i <= j)
+		{
+			Swap(table[i], table[j]);
+			i++;
+			j--;
+		}
+	}
+	SortTable(table, left, j);
+	SortTable(table, i, right);
+}
 
 //tạo cây Huffman
 HFNTree CreateHFNTree(vector<NODE*> table)
 {
 	HFNTree tree;
 	NODE* p;
-	SortTable(table);		//sắp xếp bảng tần số
+	SortTable(table,0,table.size()-1);		//sắp xếp bảng tần số
 
 	while (table.size() > 1) {
 		p = new NODE;
@@ -98,7 +121,7 @@ HFNTree CreateHFNTree(vector<NODE*> table)
 		table.erase(table.begin(), table.begin() + 2);
 		table.resize(table.size());
 		table.push_back(p);
-		SortTable(table);
+		SortTable(table, 0, table.size() - 1);
 	}
 	tree.root = table[0];
 	return tree;
@@ -107,7 +130,9 @@ HFNTree CreateHFNTree(vector<NODE*> table)
 //chuyển một kí tự thành dãy bit
 string charToBit(unsigned char c)
 {
-	string str = "";
+	bitset <8> bset = c;
+	return bset.to_string();
+	/*string str = "";
 	int iBit = (int)c;
 	int bit;
 	for (int i = 0; i < 8; i++)
@@ -117,6 +142,7 @@ string charToBit(unsigned char c)
 		iBit = iBit / 2;
 	}
 	return str;
+	*/
 }
 
 //chuẩn hóa chuỗi mã hóa
@@ -195,7 +221,7 @@ int CountChar(vector<NODE*> table)
 // Nén file một file riêng lẻ
 void NenFile(string fileNameInput, string fileNameNen)
 {
-	fstream fInput, fNen;
+	fstream fInput, fNen;	
 	vector<NODE*> table;
 	vector<Bit> tableBit;
 	HFNTree tree;
@@ -523,7 +549,7 @@ vector<NODE*> ReCreateTable(string strBitTable)
 		table.push_back(p);
 		i++;
 	}
-	SortTable(table);
+	SortTable(table, 0, table.size() - 1);
 	return table;
 }
 

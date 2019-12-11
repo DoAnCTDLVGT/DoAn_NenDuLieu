@@ -8,6 +8,7 @@
 #include <cmath>
 #include <Windows.h>
 #include <dirent.h>
+#include <bitset>
 using namespace std;
 
 //struct NODE
@@ -52,6 +53,7 @@ vector<NODE*> TaoBangTanSo(fstream& fInput);
 void Swap(NODE* p, NODE* q);
 // sắp xếp tần số của mỗi phần tử trong bảng
 void SortTable(vector<NODE*>& table);
+void SortTable(vector<NODE*>& table, int left, int right);
 //tạo cây Huffman
 HFNTree CreateHFNTree(vector<NODE*> table);
 //chuyển một kí tự thành dãy bit
