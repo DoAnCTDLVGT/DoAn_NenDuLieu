@@ -7,10 +7,8 @@
 #include <fstream>
 #include <cmath>
 #include <Windows.h>
-<<<<<<< HEAD
-#include<dirent>
-=======
->>>>>>> 2c9deb449b1e563312c5c5113aaa1d64df4e39fc
+#include <dirent.h>
+#include <bitset>
 using namespace std;
 
 //struct NODE
@@ -55,6 +53,7 @@ vector<NODE*> TaoBangTanSo(fstream& fInput);
 void Swap(NODE* p, NODE* q);
 // sắp xếp tần số của mỗi phần tử trong bảng
 void SortTable(vector<NODE*>& table);
+void SortTable(vector<NODE*>& table, int left, int right);
 //tạo cây Huffman
 HFNTree CreateHFNTree(vector<NODE*> table);
 //chuyển một kí tự thành dãy bit
@@ -77,7 +76,7 @@ void NenFile(string fileNameInput, string fileNameNen);
 string wchar_t2string(const wchar_t* wchar);
 wchar_t* string2wchar_t(const string& str);
 //hàm duyệt folder
-vector<string> listFilesInDirectory(string directoryName);
+vector<string> listFilesInDirectory(string &directoryName);
 // Nén folder
 void NenFolder(string folderNameInput, string fileNameNen);
 //PHẦN GIẢI NÉN

@@ -42,7 +42,7 @@ vector<NODE*> TaoBangTanSo(fstream& fInput)
 		if (vt == -1)
 		{
 			p = CreateNode(c);
-			table.push_back(p);
+			table.push_back(p);	
 		}
 		else
 		{
@@ -81,13 +81,36 @@ void SortTable(vector<NODE*>& table)
 		Swap(table[vt], table[i]);
 	}
 }
+void SortTable(vector<NODE*>& table,int left,int right)
+{
+	int pivot = (left + right) / 2;
+	int i = left;
+	int j = right;
+	if (i >= j)
+		return;
+	while (i <= j)
+	{
+		while (table[pivot]->freq > table[i]->freq || (table[pivot]->freq == table[i]->freq&&table[pivot]->c > table[i]->c))
+			i++;
+		while (table[pivot]->freq < table[j]->freq || (table[pivot]->freq == table[j]->freq&&table[pivot]->c < table[j]->c))
+			j--;
+		if (i <= j)
+		{
+			Swap(table[i], table[j]);
+			i++;
+			j--;
+		}
+	}
+	SortTable(table, left, j);
+	SortTable(table, i, right);
+}
 
 //tạo cây Huffman
 HFNTree CreateHFNTree(vector<NODE*> table)
 {
 	HFNTree tree;
 	NODE* p;
-	SortTable(table);		//sắp xếp bảng tần số
+	SortTable(table,0,table.size()-1);		//sắp xếp bảng tần số
 
 	while (table.size() > 1) {
 		p = new NODE;
@@ -98,7 +121,7 @@ HFNTree CreateHFNTree(vector<NODE*> table)
 		table.erase(table.begin(), table.begin() + 2);
 		table.resize(table.size());
 		table.push_back(p);
-		SortTable(table);
+		SortTable(table, 0, table.size() - 1);
 	}
 	tree.root = table[0];
 	return tree;
@@ -107,7 +130,9 @@ HFNTree CreateHFNTree(vector<NODE*> table)
 //chuyển một kí tự thành dãy bit
 string charToBit(unsigned char c)
 {
-	string str = "";
+	bitset <8> bset = c;
+	return bset.to_string();
+	/*string str = "";
 	int iBit = (int)c;
 	int bit;
 	for (int i = 0; i < 8; i++)
@@ -117,6 +142,7 @@ string charToBit(unsigned char c)
 		iBit = iBit / 2;
 	}
 	return str;
+	*/
 }
 
 //chuẩn hóa chuỗi mã hóa
@@ -195,7 +221,7 @@ int CountChar(vector<NODE*> table)
 // Nén file một file riêng lẻ
 void NenFile(string fileNameInput, string fileNameNen)
 {
-	fstream fInput, fNen;
+	fstream fInput, fNen;	
 	vector<NODE*> table;
 	vector<Bit> tableBit;
 	HFNTree tree;
@@ -278,15 +304,11 @@ void NenFile(string fileNameInput, string fileNameNen)
 				fNen.write(&c, sizeof(c));
 				fNen.write(&addBit, sizeof(c));
 				break;
-			}
-			addBit = 0;
-			fNen.write(&addBit, sizeof(c));					//nếu bằng addBit = 8 thì chuỗi rỗng
+			}					//nếu bằng addBit = 8 thì chuỗi rỗng
 		}
 	}
 
-	cout << strBitTable << endl;
-	cout << strBitInput << endl;
-	cout << strMain << endl;
+	cout << "Da nen xong !!" << endl;
 	fNen.close();
 	fInput.close();
 }
@@ -315,10 +337,28 @@ wchar_t* string2wchar_t(const string& str)
 	wchar[index] = 0;
 	return wchar;
 }
-
 //hàm duyệt folder
-vector<string> listFilesInDirectory(string directoryName)
+vector<string> listFilesInDirectory(string &directoryName)
 {
+	DIR *dir;
+	struct dirent *entry;
+	vector <string> listName;
+	dir = opendir(directoryName.c_str());
+	if (dir == NULL)
+		exit(0);
+	while ((entry = readdir(dir)) != NULL)
+	{
+		fstream f(directoryName + "\\" + entry->d_name, ios::in);
+		if (f.is_open())
+		{
+			listName.push_back((entry->d_name));
+			f.close();
+		}
+
+	}
+	
+	return listName;
+	/*
 	WIN32_FIND_DATA FindFileData;
 	wchar_t* FileName = string2wchar_t(directoryName);// ten folder
 
@@ -331,6 +371,7 @@ vector<string> listFilesInDirectory(string directoryName)
 		listFileNames.push_back(wchar_t2string(FindFileData.cFileName));
 
 	return listFileNames;
+	*/
 }
 
 //
@@ -339,11 +380,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 	// duyet cai tap tin co trong folder
 	vector<string> listFile;
 	string str = folderNameInput;
-	str = str + "\\*txt";
-
 	listFile = listFilesInDirectory(str);
-
-
 	for (int i = 0; i < listFile.size(); i++) {
 		listFile[i] = folderNameInput + "//" + listFile[i];
 	}
@@ -376,8 +413,8 @@ void NenFolder(string folderNameInput, string fileNameNen)
 	}
 
 	// tien hanh nen tung tap tin
-	for (int i = 0; i < lengthFolder; i++) {
-
+	for (int i = 0; i < lengthFolder; i++) 
+	{
 		vector<NODE*>table;
 		vector<Bit>tableBit;
 		string strTemp;
@@ -387,7 +424,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 		// mo tap tin ra de xay dung bang tan so
 		fInput.open(listFile[i], ios::in | ios::binary);
 		if (!fInput) {
-			cout << "khong tim thay tap tin " << endl;
+			cout << "khong tim thay file trong folder " << endl;
 			exit(0);
 		}
 
@@ -414,7 +451,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 		size = tableBit.size();
 
 		// mo lai tap tin thu i de duyet
-		fInput.open(listFile[i], ios::in | ios::in);
+		fInput.open(listFile[i], ios::in | ios::binary);
 
 		while (1) {
 
@@ -452,15 +489,13 @@ void NenFolder(string folderNameInput, string fileNameNen)
 		fInput.close();
 		// sau moi lan nen moi tap tin thi ghi chuoi "  "(gom 2 khoang trang) vao trong file nen
 		string add = " mai ";
-		char tm = ' ';
+		char tm;
 		for (int i = 0; i < add.length(); i++) {
 			tm = add[i];
 			fNen.write(&tm, sizeof(tm));
 		}
 
 	}//end for
-
-	cout << "du lieu duoc luu trong file nen co ten 18120572.huff " << endl;
 
 	fNen.close();
 
@@ -473,18 +508,20 @@ string LayChuoiMaHoaBangTanSo(fstream& fNen)
 {
 	string strTemp;
 	string strTable;
-	char c;
+	unsigned char c;
 	int size = 0, temp;
 	//đọc kí tự đầu tiên cho đến gặp khoang trắng là độ dài chuỗi
-	fNen.read(&c, sizeof(c));
+	fNen.read((char*)(&c), sizeof(c));
+	while (c == ' ')
+		fNen.read((char*)(&c), sizeof(c));
 	while (c != ' ') {
 		temp = c - 48;
 		size = size * 10 + temp;
-		fNen.read(&c, sizeof(c));
+		fNen.read((char*)(&c), sizeof(c));
 	}
 
 	for (int i = 1; i <= size; i++) {
-		fNen.read(&c, sizeof(c));
+		fNen.read((char*)(&c), sizeof(c));
 		strTable += c;
 	}
 	return strTable;
@@ -512,7 +549,7 @@ vector<NODE*> ReCreateTable(string strBitTable)
 		table.push_back(p);
 		i++;
 	}
-	SortTable(table);
+	SortTable(table, 0, table.size() - 1);
 	return table;
 }
 
@@ -542,7 +579,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 	vector<NODE*> table;
 	HFNTree tree;
 	string strTemp = "", strBitTable = "", strBitInput = "";
-	char cstr, c;
+	unsigned char cstr, c;
 	int sum, count = 0, cNum;
 
 	fOutput.open(fileNameOutput, ios::out | ios::binary);
@@ -563,21 +600,23 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 	tree = CreateHFNTree(table);
 	//đọc các dòng tiếp theo trong file nén để mã hóa
 	while (1) {
-		fNen.read(&c, sizeof(c));
+		fNen.read((char*)(&c), sizeof(c));
 		strBitInput = strBitInput + charToBit(c);					//chuyển kí tự đọc dk thành dãy bit
 		if (fNen.eof()) {
 			break;
 		}
 		while (strBitInput.length() > 0) {
 			if (count == sum) {
-				fNen.read(&c, sizeof(c));										//đọc kí tự cuối cùng luôn
+				fNen.read((char*)(&c), sizeof(c));										//đọc kí tự cuối cùng luôn
 				strBitInput = strBitInput + charToBit(c);
 				strTemp = strBitInput.substr(strBitInput.length() - 8, 8);		//lấy 8 bít cuối là sô lượng số 0 thêm vào
 				strBitInput.erase(strBitInput.length() - 8, 8);					//xóa 8 bit cuối đi
 				cNum = BitToChar(strTemp);
 				strBitInput.erase(strBitInput.length() - cNum, cNum);			//xóa số số 0 đã thêm vào
 				cstr = GiaiMaBit(tree.root, strBitInput);
-				fOutput << cstr;
+				if (cstr == NULL)
+					break;
+				fOutput.write((char*)(&cstr),sizeof(cstr));
 				break;
 			}
 			strTemp = strBitInput;
@@ -586,7 +625,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 				strBitInput = strTemp;
 				break;
 			}
-			fOutput.write(&c, sizeof(c));
+			fOutput.write((char*)(&c), sizeof(c));
 			count++;
 		}
 	}
@@ -646,7 +685,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen, string folderNameOut)
 				cNum = BitToChar(strTemp);
 				strBitInput.erase(strBitInput.length() - cNum, cNum);			//xóa số số 0 đã thêm vào
 				cstr = GiaiMaBit(tree.root, strBitInput);
-				fOutput << cstr;
+				fOutput.write(&cstr,sizeof(cstr));
 				break;
 			}
 			strTemp = strBitInput;									//lưu tạm thời lại chuỗi xử lí
@@ -698,7 +737,6 @@ void GiaiNenFolder(string fileNameNen, string folderNameOut, string folderNameIn
 				fi.read(&c3, sizeof(c3));
 				if (c1 == 'm' && c2 == 'a' && c3 == 'i')
 				{
-					fi.read(&c, sizeof(c));
 					break;
 				}
 				else {
@@ -815,7 +853,7 @@ void GiaiNenFileRiengLe(string fileNameNen, string folderNameOut, string folderN
 		str = str + to_string(i) + ".txt";
 		_dataToDecode.push_back(str);
 		fi.open(str, ios::out | ios::binary);
-		for (int j = 0; j < _str[i].size(); j++) {
+		for (int j = 0; j < _str[i].size(); j++){
 			c = _str[i][j];
 			fi.write(&c, sizeof(c));
 		}
