@@ -91,7 +91,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen);
 //giải nén file riêng lẻ , lưu vào trong folder
 void GiaiNen(string fileNameOutput, string fileNameNen, string folderNameOut);
 //giải nén nguyên folder, kết quả lưu vào folder khác
-void GiaiNenFolder(string fileNameNen, string folderNameOut, string folderNameIn);
+void GiaiNenFolder(string fileNameNen, string folderNameOut);
 // giải nén riêng lẻ từng file trong một folder, lưu kết quả vào trong folder khác
 void GiaiNenFileRiengLe(string fileNameNen, string folderNameOut, string folderNameIn);
 void XemKichThuocFile(string file_Nen, string folderNameInput);

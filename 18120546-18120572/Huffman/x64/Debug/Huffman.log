@@ -1,4 +1,6 @@
-﻿  Source.cpp
+﻿  main.cpp
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\main.cpp(3): warning C4326: return type of 'main' should be 'int' instead of 'void'
+  Source.cpp
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(67): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(113): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
@@ -7,11 +9,12 @@ e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(160): warning C4
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(172): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(204): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(264): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(389): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(451): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(552): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(974): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(990): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(388): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(450): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(551): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(870): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(886): warning C4244: '=': conversion from 'std::streamoff' to 'int', possible loss of data
+  Generating Code...
 e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(338): warning C4172: returning address of local variable or temporary: wchar
-e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(573): warning C4715: 'GiaiMaBit': not all control paths return a value
+e:\cautrucdulieu_giaithuat\18120546-18120572\huffman\source.cpp(572): warning C4715: 'GiaiMaBit': not all control paths return a value
   Huffman.vcxproj -> E:\Cautrucdulieu_giaithuat\18120546-18120572\x64\Debug\Huffman.exe

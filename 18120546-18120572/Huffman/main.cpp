@@ -18,11 +18,13 @@ void main()
 			while (1)
 			{
 				int choose;
+				cout << "----------------------------------" << endl;
 				cout << "0. Quay lai menu truoc" << endl;
 				cout << "1.Nen file " << endl;
 				cout << "2.Giai nen file" << endl;
 				cout << "Your Choose :";
 				cin >> choose;
+				cout << endl << "----------------------------------" << endl;
 				if (choose == 0)
 					break;
 				else if (choose == 1)
@@ -36,6 +38,7 @@ void main()
 					cout << "Nhap ten file out : ";
 					getline(cin, file_out);
 					NenFile(file_in, file_out);
+					cout << "----------------------------------" << endl;
 				}
 				else if(choose==2)
 				{
@@ -48,23 +51,12 @@ void main()
 					cout << "Nhap ten file out : ";
 					getline(cin, file_out);
 					GiaiNen(file_out, file_nen);
+					cout << "----------------------------------" << endl;
 				}
 			}
 		}
 		else if (choo == 2)
 		{
-
-			string folderin = "";
-			string folderout = "";
-			rewind(stdin);
-			cout << "nhap ten folder in : ";
-			getline(cin, folderin);
-			cout << endl;
-			rewind(stdin);
-			cout << "nhap ten folder out: ";
-			getline(cin, folderout);
-			cout << endl;
-
 			int choose;
 			while (1) {
 
@@ -72,9 +64,9 @@ void main()
 				cout << endl;
 				cout << "Press 0: Quay lai menu truoc !" << endl;
 				cout << "Press 1: Nen toan bo file trong folder !" << endl;
-				cout << "Press 2: Xem noi dung file nen !" << endl;
-				cout << "Press 3: Giai nen toan bo folder !" << endl;
-				cout << "Press 4: Chon va giai nen file rieng le tong folder do !" << endl;
+				//cout << "Press 2: Xem noi dung file nen !" << endl;
+				cout << "Press 2: Giai nen toan bo folder !" << endl;
+				//cout << "Press 4: Chon va giai nen file rieng le tong folder do !" << endl;
 				cout << endl;
 				cout << "-----------------------------------------------------------------" << endl;
 				cout << "Your choose : ";
@@ -84,23 +76,52 @@ void main()
 
 				if (choose == 0)
 					break;
-				if (choose == 1) {
-
+				else if (choose == 1) 
+				{
+					string folderin = "";
+					string folderout = "";
+					rewind(stdin);
+					cout << "nhap ten folder in : ";
+					getline(cin, folderin);
+					cout << endl;
+					rewind(stdin);
+					cout << "nhap ten folder out: ";
+					getline(cin, folderout);
+					cout << endl;
 					NenFolder(folderin, folderout);
-
+					cout << "----------------------------------" << endl;
 				}
 
-				if (choose == 2) {
+				/*else if (choose == 2) 
+				{
+					string folderin = "";
+					string folderout = "";
+					rewind(stdin);
+					cout << "nhap ten folder in : ";
+					getline(cin, folderin);
+					cout << endl;
+					rewind(stdin);
+					cout << "nhap ten folder out: ";
+					getline(cin, folderout);
+					cout << endl;
 					XemKichThuocFile(folderout, folderin);
 				}
+				*/
 
-				if (choose == 3) {
+				else if (choose == 2) 
+				{
+					string filenen = "";
+					string folderout = "";
+					rewind(stdin);
+					cout << "nhap ten folder nen : ";
+					getline(cin, filenen);
+					cout << endl;
+					rewind(stdin);
+					cout << "nhap ten folder out: ";
+					getline(cin, folderout);
+					cout << endl;
 
-					GiaiNenFolder("FileNen.huff", folderout, folderin);
-				}
-
-				if (choose == 4) {
-					GiaiNenFileRiengLe("FileNen.huff", folderout, folderin);
+					GiaiNenFolder(filenen, folderout);
 				}
 			}
 		}

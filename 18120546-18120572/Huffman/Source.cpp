@@ -27,13 +27,13 @@ vector<NODE*> TaoBangTanSo(fstream& fInput)
 {
 	vector<NODE*> table;
 	NODE* p;
-	char c;
+	unsigned char c;
 	string strData;
 	int vt = -1;
 	//duyệt chuỗi truyền vào
 	while (1)
 	{
-		fInput.read(&c, sizeof(c));
+		fInput.read((char*)(&c), sizeof(c));
 		if (fInput.eof())
 		{
 			break;
@@ -229,19 +229,19 @@ void NenFile(string fileNameInput, string fileNameNen)
 	string strBitTable = "";//chuỗi mã hóa bảng tần số thành chuỗi bit
 	string strBitInput = "";//chuỗi mã hóa chuỗi input thành chuoi bit_thay thế các kí tự trong chuỗi input bằng bit mới tạo
 	string strMain = "";	//chuỗi mã hóa chuỗi trên thành kí tự
-	char c;
+	unsigned char c;
 	int size, sum, count = 0;
 	fInput.open(fileNameInput, ios::in | ios::binary);
 	if (!fInput)
 	{
 		cout << "Khong mo duoc file in\n";
-		exit(0);
+		return;
 	}
 	fNen.open(fileNameNen, ios::out | ios::binary);
 	if (!fNen)
 	{
 		cout << "Khong mo duoc file out\n";
-		exit(0);
+		return;
 	}
 
 	table = TaoBangTanSo(fInput);				//tạo bảng tần số
@@ -255,7 +255,7 @@ void NenFile(string fileNameInput, string fileNameNen)
 	for (int i = 0; i < strBitTable.length(); i++)
 	{
 		c = strBitTable[i];
-		fNen.write(&c, sizeof(c));
+		fNen.write((char*)(&c), sizeof(c));
 	}
 
 	//fInput.seekg(fInput.beg);
@@ -267,12 +267,12 @@ void NenFile(string fileNameInput, string fileNameNen)
 	if (!fInput)
 	{
 		cout << "Khong mo duoc file\n";
-		exit(0);
+		return;
 	}
 	//đọc từng kí tự trong file input biến đổi rồi đưa vào file nén
 	while (1)
 	{
-		fInput.read(&c, sizeof(c));
+		fInput.read((char*)(&c), sizeof(c));
 		if (fInput.eof())
 		{
 			break;
@@ -291,7 +291,7 @@ void NenFile(string fileNameInput, string fileNameNen)
 			strTemp = strBitInput.substr(0, 8);					//lấy 8 kí tự nhị phân chuyển thành kí tự ascii
 			strBitInput.erase(0, 8);							//xóa 8 kí tự đó đi
 			c = BitToChar(strTemp);
-			fNen.write(&c, sizeof(c));
+			fNen.write((char*)(&c), sizeof(c));
 		}
 		if (count == sum)
 		{
@@ -299,10 +299,10 @@ void NenFile(string fileNameInput, string fileNameNen)
 			//cout << (int)addBit << endl;
 			if (addBit < 8 && addBit > 0)
 			{
-				c = BitToChar(ChuanHoaChuoiBit(strBitInput));
+				c = BitToChar((strBitInput));
 				//cout << c << endl;
-				fNen.write(&c, sizeof(c));
-				fNen.write(&addBit, sizeof(c));
+				fNen.write((char*)(&c), sizeof(c));
+				fNen.write((char*)(&addBit), sizeof(addBit));
 				break;
 			}					//nếu bằng addBit = 8 thì chuỗi rỗng
 		}
@@ -345,13 +345,16 @@ vector<string> listFilesInDirectory(string &directoryName)
 	vector <string> listName;
 	dir = opendir(directoryName.c_str());
 	if (dir == NULL)
+	{
+		cout << "Khong mo duoc thu muc " << endl;
 		exit(0);
+	}
 	while ((entry = readdir(dir)) != NULL)
 	{
 		fstream f(directoryName + "\\" + entry->d_name, ios::in);
 		if (f.is_open())
 		{
-			listName.push_back((entry->d_name));
+			listName.push_back((directoryName + "\\" + entry->d_name));
 			f.close();
 		}
 
@@ -381,10 +384,6 @@ void NenFolder(string folderNameInput, string fileNameNen)
 	vector<string> listFile;
 	string str = folderNameInput;
 	listFile = listFilesInDirectory(str);
-	for (int i = 0; i < listFile.size(); i++) {
-		listFile[i] = folderNameInput + "//" + listFile[i];
-	}
-
 	// so luong tap tin co trong folder
 	int lengthFolder = listFile.size();
 
@@ -409,7 +408,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 	fNen.open(fileNameNen, ios::out | ios::binary);
 	if (!fNen) {
 		cout << "khong mo dc file nen!" << endl;
-		exit(0);
+		return;
 	}
 
 	// tien hanh nen tung tap tin
@@ -425,7 +424,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 		fInput.open(listFile[i], ios::in | ios::binary);
 		if (!fInput) {
 			cout << "khong tim thay file trong folder " << endl;
-			exit(0);
+			return;
 		}
 
 		table = TaoBangTanSo(fInput);
@@ -496,7 +495,7 @@ void NenFolder(string folderNameInput, string fileNameNen)
 		}
 
 	}//end for
-
+	cout << "Da nen xong" << endl;
 	fNen.close();
 
 }
@@ -585,13 +584,13 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 	fOutput.open(fileNameOutput, ios::out | ios::binary);
 	if (!fOutput) {
 		cout << "Khong mo duoc file\n";
-		exit(0);
+		return;
 	}
 
 	fNen.open(fileNameNen, ios::in | ios::binary);
 	if (!fNen) {
 		cout << "Khong mo duoc file\n";
-		exit(0);
+		return;
 	}
 	strBitTable = LayChuoiMaHoaBangTanSo(fNen);
 	//tạo lại bảng
@@ -612,6 +611,12 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 				strTemp = strBitInput.substr(strBitInput.length() - 8, 8);		//lấy 8 bít cuối là sô lượng số 0 thêm vào
 				strBitInput.erase(strBitInput.length() - 8, 8);					//xóa 8 bit cuối đi
 				cNum = BitToChar(strTemp);
+				if (cNum > strBitInput.length())
+
+				{
+					strBitInput.clear();
+					break;
+				}
 				strBitInput.erase(strBitInput.length() - cNum, cNum);			//xóa số số 0 đã thêm vào
 				cstr = GiaiMaBit(tree.root, strBitInput);
 				if (cstr == NULL)
@@ -629,6 +634,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen)
 			count++;
 		}
 	}
+	cout << "Da giai nen xong !!" << endl;
 	fNen.close();
 	fOutput.close();
 }
@@ -650,14 +656,14 @@ void GiaiNen(string fileNameOutput, string fileNameNen, string folderNameOut)
 	if (!fOutput)
 	{
 		cout << "Khong mo duoc file\n";
-		exit(0);
+		return;
 	}
 
 	fNen.open(fileNameNen, ios::in | ios::binary);
 	if (!fNen)
 	{
 		cout << "Khong mo duoc file\n";
-		exit(0);
+		return;
 	}
 	strBitTable = LayChuoiMaHoaBangTanSo(fNen);
 	//tạo lại bảng
@@ -683,8 +689,15 @@ void GiaiNen(string fileNameOutput, string fileNameNen, string folderNameOut)
 				strTemp = strBitInput.substr(strBitInput.length() - 8, 8);		//lấy 8 bít cuối là sô lượng số 0 thêm vào
 				strBitInput.erase(strBitInput.length() - 8, 8);					//xóa 8 bit cuối đi
 				cNum = BitToChar(strTemp);
+				if (cNum > strBitInput.length())
+				{
+					strBitInput.clear();
+					break;
+				}
 				strBitInput.erase(strBitInput.length() - cNum, cNum);			//xóa số số 0 đã thêm vào
 				cstr = GiaiMaBit(tree.root, strBitInput);
+				if (cstr == NULL)
+					break;
 				fOutput.write(&cstr,sizeof(cstr));
 				break;
 			}
@@ -704,7 +717,7 @@ void GiaiNen(string fileNameOutput, string fileNameNen, string folderNameOut)
 }
 
 //giải nén nguyên folder, kết quả lưu vào folder khác
-void GiaiNenFolder(string fileNameNen, string folderNameOut, string folderNameIn) {
+void GiaiNenFolder(string fileNameNen, string folderNameOut) {
 
 	fstream fi;
 	fi.open(fileNameNen, ios::in | ios::binary);
@@ -772,129 +785,12 @@ void GiaiNenFolder(string fileNameNen, string folderNameOut, string folderNameIn
 	}
 
 	// tien hanh giai nen tat ca tap tin: 
-	vector<string> listFile;
-	string str1 = folderNameIn;
-	str1 = str1 + "\\*txt";
 	//cout << "folder: "<<str1 << endl;
 	//str1 = "folder_in\\*txt";
-	listFile = listFilesInDirectory(str1);
-	cout << listFile[0] << endl;
 	for (int i = 0; i < _str.size(); i++)
-		GiaiNen(listFile[i], _dataToDecode[i], folderNameOut);
+		GiaiNen("data" + to_string(i), _dataToDecode[i], folderNameOut);
 
 	cout << "toan bo file da duoc luu trong folder !" << endl;
-}
-
-// giải nén riêng lẻ từng file trong một folder, lưu kết quả vào trong folder khác
-void GiaiNenFileRiengLe(string fileNameNen, string folderNameOut, string folderNameIn) {
-
-	// mo file_out chua du lieu nen cua toan bo folder
-	fstream fi;
-	fi.open(fileNameNen, ios::in | ios::binary);
-	if (!fi) {
-		cout << "khong ton tai file nen !" << endl;
-		return;
-	}
-
-	//tiến hành lấy dữ liệu của mỗi tập tin từ file_out
-
-	vector<string>_str;
-	string tmp;
-
-	char c1, c2, c3, c;
-	while (1) {
-		if (fi.eof())
-			break;
-		tmp = "";
-
-		while (1) {
-
-			fi.read(&c, sizeof(c));
-			if (fi.eof())
-				break;
-			if (c == ' ') {
-				if (fi.eof())
-					break;
-				fi.read(&c1, sizeof(c1));
-				fi.read(&c2, sizeof(c2));
-				fi.read(&c3, sizeof(c3));
-				if (c1 == 'm' && c2 == 'a' && c3 == 'i')
-				{
-					//fi.seekg(1, ios::cur);
-					fi.read(&c, sizeof(c));
-					//fi.seekg(1, ios::cur);
-					break;
-				}
-				else {
-					tmp = tmp + c + c1 + c2 + c3;
-				}
-			}
-			else
-				tmp = tmp + c;
-		}
-		if (tmp != "") {
-			_str.push_back(tmp);
-		}
-	}
-
-
-	//cout << ": " << _str.size() << endl;
-	//for (int i = 0; i < _str.size(); i++)
-	//	cout << "chuoi : " << i + 1 << "  : " << _str[i] << endl;
-
-	fi.close();
-
-
-	//Lưu dữ liệu của mỗi tập tin ra file nén riêng
-	string str = "dataToDecode";
-	vector<string>_dataToDecode;
-
-	for (int i = 0; i < _str.size(); i++) {
-		str = str + to_string(i) + ".txt";
-		_dataToDecode.push_back(str);
-		fi.open(str, ios::out | ios::binary);
-		for (int j = 0; j < _str[i].size(); j++){
-			c = _str[i][j];
-			fi.write(&c, sizeof(c));
-		}
-
-		str = "dataToDecode";
-		fi.close();
-	}
-
-
-	//mở folder in để lấy tên ban đầu của mỗi tập tin 
-	vector<string> listFile;
-	string str1 = folderNameIn;
-	str1 = str1 + "\\*txt";
-	listFile = listFilesInDirectory(str1);
-
-	// nhập yêu cầu : các tập tin muốn giải nén
-	int len, yc;
-	cout << "cac tap tin co trong thu muc la : " << endl;
-	for (int i = 0; i < listFile.size(); i++) {
-		cout << i + 1 << " . " << listFile[i] << endl;
-	}
-
-
-	cout << "nhap so luong tap tin muon giai nen (so luong phai nho hon " << _str.size() + 1 << " ) : " << endl;
-	do {
-		cin >> len;
-		if (len > _str.size())
-			cout << "du lieu khong hop le , yeu cau nhap lai !" << endl;
-	} while (len > _str.size());
-
-	// giải nén từng tập tin và lưu vào folder_out
-
-	cout << "nhap thu tu cac file muon giai nen ( tu 1 -> " << listFile.size() << " )" << endl;
-	for (int i = 0; i < len; i++) {
-		cin >> yc;
-		if (yc > 0 && yc <= listFile.size())
-			GiaiNen(listFile[yc - 1], _dataToDecode[yc - 1], folderNameOut);
-		else cout << "khong hop le !" << endl;
-	}
-
-	cout << "file duoc luu trong folder !" << endl;
 }
 
 
